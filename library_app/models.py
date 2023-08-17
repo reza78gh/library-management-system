@@ -10,6 +10,12 @@ class Book(models.Model):
     ISBN = models.CharField("شابک", max_length=20)
     price = models.PositiveSmallIntegerField("قیمت")
 
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'کتاب'
+
 
 class Author(models.Model):
     firstName = models.CharField(max_length=100)
@@ -20,6 +26,9 @@ class Author(models.Model):
     def __str__(self):
         return f"{self.firstName} {self.lastName}"
 
+    class Meta:
+        verbose_name_plural = 'نویسنده'
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=100)
@@ -27,8 +36,11 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'ژانر'
 
-class LibraryUser(models.Model):
+
+class LibraryUser(User):
     MEMBERSHIP_TYPE_CHOICES = (
         ('0', 'غیرفعال'),
         ('1', 'عادی'),
@@ -36,6 +48,9 @@ class LibraryUser(models.Model):
     )
     membershipType = models.CharField("نوع عضویت", max_length=1, choices=MEMBERSHIP_TYPE_CHOICES, default='0')
     membershipValidityDate = models.DateField("اعتبار عضویت", auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'کاربر کتابخانه'
 
 
 class Borrow(models.Model):
@@ -45,3 +60,9 @@ class Borrow(models.Model):
     borrowDate = models.DateTimeField("تاریخ امانت دادن", auto_now_add=True)
     returnDate = models.DateTimeField("تاریخ برگشت")
     cost = models.PositiveSmallIntegerField("هزینه")
+
+    def __str__(self):
+        return f'{self.book} -> {self.user}'
+
+    class Meta:
+        verbose_name_plural = 'رزرو'

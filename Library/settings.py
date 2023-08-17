@@ -1,5 +1,5 @@
 from pathlib import Path
-from . import config
+from .config import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
