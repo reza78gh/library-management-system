@@ -6,9 +6,10 @@ class Book(models.Model):
     title = models.CharField("عنوان", max_length=100)
     author = models.ForeignKey('Author', verbose_name="نویسنده", on_delete=models.CASCADE)
     genre = models.ForeignKey('Genre', verbose_name="ژانر", on_delete=models.CASCADE)
-    publishDate = models.DateTimeField("تاریخ انتشاز")
+    publishDate = models.DateField("تاریخ انتشاز")
     ISBN = models.CharField("شابک", max_length=20)
     price = models.PositiveSmallIntegerField("قیمت")
+    description = models.TextField("توضیحات", null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -20,6 +21,7 @@ class Book(models.Model):
 class Author(models.Model):
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
+    city = models.ForeignKey("City", models.CASCADE, verbose_name="شهر")
     birthDate = models.DateField(null=True, blank=True)
     biography = models.TextField(null=True, blank=True)
 
@@ -28,6 +30,16 @@ class Author(models.Model):
 
     class Meta:
         verbose_name_plural = 'نویسنده'
+
+
+class City(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'کتاب'
 
 
 class Genre(models.Model):
